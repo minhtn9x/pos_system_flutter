@@ -1,50 +1,74 @@
 List<Map> foods = [
   {
-    "img": "assets/food1.jpeg",
-    "name": "Fruit Salad"
+    "img": "assets/food1.png",
+    "name": "Milk Tea 1"
   },
   {
-    "img": "assets/food2.jpeg",
-    "name": "Fruit Salad"
+    "img": "assets/food2.png",
+    "name": "Milk Tea 1"
   },
   {
-    "img": "assets/food3.jpeg",
-    "name": "Hamburger"
+    "img": "assets/food3.png",
+    "name": "Milk Tea 1"
   },
   {
-    "img": "assets/food4.jpeg",
-    "name": "Fruit Salad"
+    "img": "assets/food4.png",
+    "name": "Drink 1"
   },
   {
-    "img": "assets/food5.jpeg",
-    "name": "Hamburger"
+    "img": "assets/food5.png",
+    "name": "Drink 1"
   },
   {
-    "img": "assets/food6.jpeg",
-    "name": "Steak"
+    "img": "assets/food6.png",
+    "name": "Drink 1"
   },
   {
-    "img": "assets/food7.jpeg",
-    "name": "Pizza"
+    "img": "assets/food7.png",
+    "name": "Pizza 1"
   },
   {
-    "img": "assets/food8.jpeg",
-    "name": "Asparagus"
+    "img": "assets/food8.png",
+    "name": "Pizza 1"
   },
   {
-    "img": "assets/food9.jpeg",
-    "name": "Salad"
+    "img": "assets/food9.png",
+    "name": "Pizza 1"
   },
   {
-    "img": "assets/food10.jpeg",
-    "name": "Pizza"
+    "img": "assets/food13.png",
+    "name": "Milk Tea 1"
   },
   {
-    "img": "assets/food11.jpeg",
-    "name": "Pizza"
+    "img": "assets/food11.png",
+    "name": "Milk Tea 1"
   },
   {
-    "img": "assets/food12.jpg",
-    "name": "Salad"
+    "img": "assets/food12.png",
+    "name": "Milk Tea 1"
+  },
+  {
+    "img": "assets/food14.png",
+    "name": "Drink 1"
+  },
+  {
+    "img": "assets/food15.png",
+    "name": "Drink 1"
+  },
+  {
+    "img": "assets/food16.png",
+    "name": "Drink 1"
+  },
+  {
+    "img": "assets/food17.png",
+    "name": "Pizza 1"
+  },
+  {
+    "img": "assets/food18.png",
+    "name": "Pizza 1"
+  },
+  {
+    "img": "assets/food19.png",
+    "name": "Pizza 1"
   },
 ];

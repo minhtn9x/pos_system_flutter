@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_pos/util/categories.dart';
 import 'package:restaurant_pos/util/foods.dart';
-import 'package:restaurant_pos/widgets/badge.dart';
 import 'package:restaurant_pos/widgets/grid_product.dart';
 import 'package:restaurant_pos/widgets/home_category.dart';
 

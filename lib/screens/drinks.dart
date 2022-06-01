@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_pos/util/drinks.dart';
-import 'package:restaurant_pos/widgets/badge.dart';
 import 'package:restaurant_pos/widgets/grid_product.dart';
 
 
@@ -44,7 +43,7 @@ class _DrinksScreenState extends State<DrinksScreen> {
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: 4,
+              itemCount: drinks == null ? 0 :drinks.length,
               itemBuilder: (BuildContext context, int index) {
                 Map drink = drinks[index];
                 return GridProduct(

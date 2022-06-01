@@ -108,7 +108,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: milkteas == null ? 0 :milkteas.length,
+              itemCount: 4,
+              //itemCount: milkteas == null ? 0 :milkteas.length,
               itemBuilder: (BuildContext context, int index) {
                 Map milktea = milkteas[index];
                 return GridProduct(
@@ -168,7 +169,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: drinks == null ? 0 :drinks.length,
+              itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
                 Map drink = drinks[index];
                 return GridProduct(
@@ -227,7 +228,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: drinks == null ? 0 :drinks.length,
+              itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
                 Map pizza = pizzas[index];
                 return GridProduct(

@@ -1,39 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_pos/util/pizzas.dart';
+import 'package:restaurant_pos/util/foods.dart';
 import 'package:restaurant_pos/widgets/grid_product.dart';
 
-
-class PizzasScreen extends StatefulWidget {
+class FavoriteScreen extends StatefulWidget {
   @override
-  _PizzasScreenState createState() => _PizzasScreenState();
+  _FavoriteScreenState createState() => _FavoriteScreenState();
 }
 
-class _PizzasScreenState extends State<PizzasScreen> {
+class _FavoriteScreenState extends State<FavoriteScreen> with AutomaticKeepAliveClientMixin<FavoriteScreen>{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.keyboard_backspace,
-          ),
-          onPressed: ()=>Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: Text(
-          "Pizza",
-        ),
-        elevation: 0.0,
-
-      ),
-
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
         child: ListView(
-
           children: <Widget>[
-            Divider(),
+            SizedBox(height: 10.0),
+            Text(
+              "My Favorite Items",
+              style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            SizedBox(height: 10.0),
 
             GridView.builder(
               shrinkWrap: true,
@@ -44,23 +35,29 @@ class _PizzasScreenState extends State<PizzasScreen> {
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: pizzas == null ? 0 :pizzas.length,
+              itemCount: foods == null ? 0 :foods.length,
               itemBuilder: (BuildContext context, int index) {
-                Map pizza = pizzas[index];
+//                Food food = Food.fromJson(foods[index]);
+                Map food = foods[index];
+//                print(foods);
+//                print(foods.length);
                 return GridProduct(
-                  img: pizza['img'],
-                  isFav: false,
-                  name: pizza['name'],
+                  img: food['img'],
+                  isFav: true,
+                  name: food['name'],
                   rating: 5.0,
                   raters: 23,
                 );
               },
             ),
 
-            SizedBox(height: 20.0),
+            SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

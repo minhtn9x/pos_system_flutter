@@ -44,7 +44,7 @@ class _MilkteasScreenState extends State<MilkteasScreen> {
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: 4,
+              itemCount: milkteas == null ? 0 :milkteas.length,
               itemBuilder: (BuildContext context, int index) {
                 Map milktea = milkteas[index];
                 return GridProduct(
