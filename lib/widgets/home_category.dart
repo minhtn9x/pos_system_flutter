@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_pos/screens/categories_screen.dart';
+import 'package:restaurant_pos/screens/drinks.dart';
+import 'package:restaurant_pos/screens/milkteas.dart';
+import 'package:restaurant_pos/screens/pizzas.dart';
 
 
 class HomeCategory extends StatefulWidget {
@@ -29,7 +32,16 @@ class _HomeCategoryState extends State<HomeCategory> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context){
-              return CategoriesScreen();
+              if(widget.title.toString() == "Drinks"){
+                return DrinksScreen();
+              }
+              if(widget.title.toString() == "Milk Tea"){
+                return MilkteasScreen();
+              }
+              if(widget.title.toString() == "Pizza"){
+                return PizzasScreen();
+              }
+
             },
           ),
         );

@@ -5,11 +5,11 @@ List<Map> foods = [
   },
   {
     "img": "assets/food2.png",
-    "name": "Milk Tea 1"
+    "name": "Milk Tea 2"
   },
   {
     "img": "assets/food3.png",
-    "name": "Milk Tea 1"
+    "name": "Milk Tea 3"
   },
   {
     "img": "assets/food4.png",

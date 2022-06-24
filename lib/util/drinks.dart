@@ -5,11 +5,11 @@ List<Map> drinks = [
   },
   {
     "img": "assets/food5.png",
-    "name": "Drink 1"
+    "name": "Drink 2"
   },
   {
     "img": "assets/food6.png",
-    "name": "Drink 1"
+    "name": "Drink 3"
   },
   {
     "img": "assets/food14.png",
