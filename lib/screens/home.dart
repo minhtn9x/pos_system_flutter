@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_pos/screens/drinks.dart';
 import 'package:restaurant_pos/screens/pizzas.dart';
@@ -35,7 +36,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
 
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
+
         child: ListView(
+
           children: <Widget>[
             Text(
               "Food and Drink Categories",

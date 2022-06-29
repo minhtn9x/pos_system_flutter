@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_pos/providers/app_provider.dart';
 import 'package:restaurant_pos/screens/splash.dart';
+import 'package:restaurant_pos/util/auth_service.dart';
 import 'package:restaurant_pos/util/const.dart';
 
 class Profile extends StatefulWidget {
@@ -40,7 +42,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "Minh Tran",
+                            FirebaseAuth.instance.currentUser.displayName,
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
@@ -55,7 +57,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "minhtnse130641@fpt.edu.vn",
+                            FirebaseAuth.instance.currentUser.email,
                             style: TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.bold,
@@ -78,14 +80,26 @@ class _ProfileState extends State<Profile> {
                                 ),
                               );
                             },
-                            child: Text("Logout",
-                              style: TextStyle(
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).accentColor,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                            // child: Text("Logout",
+                            //   style: TextStyle(
+                            //     fontSize: 13.0,
+                            //     fontWeight: FontWeight.w400,
+                            //     color: Theme.of(context).accentColor,
+                            //   ),
+                            //   overflow: TextOverflow.ellipsis,
+                            // ),
+                            child: MaterialButton(
+                              child: Text("Logout",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Theme.of(context).accentColor,
+                                ),
                             ),
+                              onPressed: (){
+                                AuthService().signOut();
+                              },
+                          ),
                           ),
                         ],
                       ),

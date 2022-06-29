@@ -170,10 +170,10 @@ class _CheckoutState extends State<Checkout> {
                       contentPadding: EdgeInsets.all(10.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(color: Colors.grey[200],),
+                        borderSide: BorderSide(color: Colors.grey,),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[200],),
+                        borderSide: BorderSide(color: Colors.grey,),
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       hintText: "Coupon Code",

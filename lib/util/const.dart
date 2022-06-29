@@ -8,10 +8,10 @@ class Constants{
   static Color lightPrimary = Color(0xfffcfcff);
   static Color darkPrimary = Colors.black;
   static Color lightAccent = Colors.red;
-  static Color darkAccent = Colors.red[400];
+  static Color darkAccent = Colors.red;
   static Color lightBG = Color(0xfffcfcff);
   static Color darkBG = Colors.black;
-  static Color ratingBG = Colors.yellow[600];
+  static Color ratingBG = Colors.yellow;
 
   static ThemeData lightTheme = ThemeData(
     backgroundColor: lightBG,
