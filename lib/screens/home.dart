@@ -1,5 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:restaurant_pos/screens/drinks.dart';
 import 'package:restaurant_pos/screens/pizzas.dart';
 import 'package:restaurant_pos/util/pizzas.dart';
@@ -10,24 +12,142 @@ import 'package:restaurant_pos/util/categories.dart';
 import '../util/drinks.dart';
 import '../util/milktea.dart';
 import 'milkteas.dart';
-
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
+  class Product {
+    String id;
+    List<Values> values;
 
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
-    for (var i = 0; i < list.length; i++) {
-      result.add(handler(i, list[i]));
+    Product({this.id, this.values});
+
+    Product.fromJson(Map<String, dynamic> json) {
+      id = json['$id'];
+      if (json['$values'] != null) {
+        values = new List<Values>();
+        json['$values'].forEach((v) {
+          values.add(new Values.fromJson(v));
+        });
+      }
     }
 
-    return result;
+    Map<String, dynamic> toJson() {
+      final Map<String, dynamic> data = new Map<String, dynamic>();
+      data['$id'] = this.id;
+      if (this.values != null) {
+        data['$values'] = this.values.map((v) => v.toJson()).toList();
+      }
+      return data;
+    }
   }
 
+  class Values {
+    String id;
+    String code;
+    String productName;
+    String shortName;
+    int price;
+    String picUrl;
+    int catId;
+    bool isAvailable;
+    int discountPercent;
+    int discountPrice;
+    int productType;
+
+    Values(
+        {this.id,
+          this.code,
+          this.productName,
+          this.shortName,
+          this.price,
+          this.picUrl,
+          this.catId,
+          this.isAvailable,
+          this.discountPercent,
+          this.discountPrice,
+          this.productType});
+
+    Values.fromJson(Map<String, dynamic> json) {
+      id = json['$id'];
+      code = json['code'];
+      productName = json['productName'];
+      shortName = json['shortName'];
+      price = json['price'];
+      picUrl = json['picUrl'];
+      catId = json['catId'];
+      isAvailable = json['isAvailable'];
+      discountPercent = json['discountPercent'];
+      discountPrice = json['discountPrice'];
+      productType = json['productType'];
+    }
+
+    Map<String, dynamic> toJson() {
+      final Map<String, dynamic> data = new Map<String, dynamic>();
+      data['$id'] = this.id;
+      data['code'] = this.code;
+      data['productName'] = this.productName;
+      data['shortName'] = this.shortName;
+      data['price'] = this.price;
+      data['picUrl'] = this.picUrl;
+      data['catId'] = this.catId;
+      data['isAvailable'] = this.isAvailable;
+      data['discountPercent'] = this.discountPercent;
+      data['discountPrice'] = this.discountPrice;
+      data['productType'] = this.productType;
+      return data;
+    }
+  }
+
+
+class NetworkRequest{
+
+  static List<Product> parseProduct(String responseBody){
+    var list = json.decode(responseBody) as List<dynamic>;
+    List<Product> products = list.map((model) => Product.fromJson(model)).toList();
+    return products;
+  }
+
+  static Future<List<Product>> fetchProduct() async {
+    final response = await http
+          .get(Uri.parse('https://localhost:5001/api/product'));
+    if (response.statusCode == 200) {
+      return compute(parseProduct, response.body);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load product');
+    }
+  }
+}
+
+
+class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
+
+  // Future<Product> futureProduct;
+  // List<T> map<T>(List list, Function handler) {
+  //   List<T> result = [];
+  //   for (var i = 0; i < list.length; i++) {
+  //     result.add(handler(i, list[i]));
+  //   }
+  //
+  //   return result;
+  // }
+
+  List<Product> products = List();
+
+  @override
+  void initState() {
+    super.initState();
+    NetworkRequest.fetchProduct().then((dataFromServer){
+      setState((){
+        products = dataFromServer;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +170,51 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
             SizedBox(height: 20.0),
 
             Container(
-              height: 65.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: categories == null?0:categories.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Map cat = categories[index];
-                  return HomeCategory(
-                    icon: cat['icon'],
-                    title: cat['name'],
-                    items: cat['items'].toString(),
-                    isHome: true,
-                  );
+                height: 65.0,
+              child: FutureBuilder<Product>(
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: (context, index){
+                        return Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('${products[index].id}'),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+
+                  // By default, show a loading spinner.
+                  return const CircularProgressIndicator();
                 },
-              ),
+
+                // child: ListView.builder(
+                //   scrollDirection: Axis.horizontal,
+                //   shrinkWrap: true,
+                //   itemCount: categories == null?0:categories.length,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     Map cat = categories[index];
+                //     return HomeCategory(
+                //       icon: cat['icon'],
+                //       title: cat['name'],
+                //       items: cat['items'].toString(),
+                //       isHome: true,
+                //     );
+                //   },
+                // ),
+              )
+
             ),
 
             SizedBox(height: 20.0),
@@ -72,6 +222,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+
                 Text(
                   "Milk Tea",
                   style: TextStyle(

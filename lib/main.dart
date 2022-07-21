@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_pos/providers/app_provider.dart';
+import 'package:restaurant_pos/screens/home.dart';
+import 'package:restaurant_pos/screens/main_screen.dart';
 import 'package:restaurant_pos/screens/splash.dart';
 import 'package:restaurant_pos/util/const.dart';
 
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
           theme: appProvider.theme,
           darkTheme: Constants.darkTheme,
           home: SplashScreen(),
+          //home: MainScreen(),
         );
       },
     );
