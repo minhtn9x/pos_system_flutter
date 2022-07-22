@@ -46,7 +46,10 @@ class GridProduct extends StatelessWidget {
                 right: -10.0,
                 bottom: 3.0,
                 child: RawMaterialButton(
-                  onPressed: (){},
+                  onPressed: (){
+
+
+                  },
                   fillColor: Colors.white,
                   shape: CircleBorder(),
                   elevation: 4.0,
@@ -109,7 +112,7 @@ class GridProduct extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context){
-              return ProductDetails();
+              return ProductDetails(img: img, name: name,);
             },
           ),
         );

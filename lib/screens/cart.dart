@@ -3,21 +3,25 @@ import 'package:restaurant_pos/screens/checkout.dart';
 import 'package:restaurant_pos/util/foods.dart';
 import 'package:restaurant_pos/widgets/cart_item.dart';
 
+import '../widgets/product.dart';
+import '../widgets/products_repository.dart';
+import 'details.dart';
+
 
 class CartScreen extends StatefulWidget {
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
-class _CartScreenState extends State<CartScreen> with AutomaticKeepAliveClientMixin<CartScreen >{
+class _CartScreenState extends State<CartScreen> with AutomaticKeepAliveClientMixin<CartScreen > {
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
+        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
         child: ListView.builder(
-          itemCount: foods == null ? 0 :foods.length,
+          itemCount: foods == null ? 0 : foods.length,
           itemBuilder: (BuildContext context, int index) {
 //                Food food = Food.fromJson(foods[index]);
             Map food = foods[index];
@@ -36,10 +40,10 @@ class _CartScreenState extends State<CartScreen> with AutomaticKeepAliveClientMi
 
       floatingActionButton: FloatingActionButton(
         tooltip: "Checkout",
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (BuildContext context){
+              builder: (BuildContext context) {
                 return Checkout();
               },
             ),
@@ -56,3 +60,8 @@ class _CartScreenState extends State<CartScreen> with AutomaticKeepAliveClientMi
   @override
   bool get wantKeepAlive => true;
 }
+
+
+
+
+

@@ -8,6 +8,7 @@ import 'package:restaurant_pos/util/pizzas.dart';
 import 'package:restaurant_pos/widgets/grid_product.dart';
 import 'package:restaurant_pos/widgets/home_category.dart';
 import 'package:restaurant_pos/util/categories.dart';
+import 'package:restaurant_pos/widgets/product.dart';
 
 import '../util/drinks.dart';
 import '../util/milktea.dart';
@@ -26,10 +27,10 @@ class Home extends StatefulWidget {
     Product({this.id, this.values});
 
     Product.fromJson(Map<String, dynamic> json) {
-      id = json['$id'];
-      if (json['$values'] != null) {
-        values = new List<Values>();
-        json['$values'].forEach((v) {
+      id = json['\$id'];
+      if (json['\$values'] != null) {
+        values = [];
+        json['\$values'].forEach((v) {
           values.add(new Values.fromJson(v));
         });
       }
@@ -37,9 +38,9 @@ class Home extends StatefulWidget {
 
     Map<String, dynamic> toJson() {
       final Map<String, dynamic> data = new Map<String, dynamic>();
-      data['$id'] = this.id;
+      data['\$id'] = this.id;
       if (this.values != null) {
-        data['$values'] = this.values.map((v) => v.toJson()).toList();
+        data['\$values'] = this.values.map((v) => v.toJson()).toList();
       }
       return data;
     }
@@ -72,7 +73,7 @@ class Home extends StatefulWidget {
           this.productType});
 
     Values.fromJson(Map<String, dynamic> json) {
-      id = json['$id'];
+      id = json['\$id'];
       code = json['code'];
       productName = json['productName'];
       shortName = json['shortName'];
@@ -87,7 +88,7 @@ class Home extends StatefulWidget {
 
     Map<String, dynamic> toJson() {
       final Map<String, dynamic> data = new Map<String, dynamic>();
-      data['$id'] = this.id;
+      data['\$id'] = this.id;
       data['code'] = this.code;
       data['productName'] = this.productName;
       data['shortName'] = this.shortName;
@@ -105,15 +106,15 @@ class Home extends StatefulWidget {
 
 class NetworkRequest{
 
-  static List<Product> parseProduct(String responseBody){
-    var list = json.decode(responseBody) as List<dynamic>;
-    List<Product> products = list.map((model) => Product.fromJson(model)).toList();
-    return products;
+  static List<Values> parseProduct(String responseBody){
+    var list = json.decode(responseBody) as Map<String, dynamic>;
+    List<Values> cats = Product.fromJson(list).values;
+    return cats;
   }
 
-  static Future<List<Product>> fetchProduct() async {
+  static Future<List<Values>> fetchProduct() async {
     final response = await http
-          .get(Uri.parse('https://localhost:5001/api/product'));
+          .get(Uri.parse('https://10.0.2.2:5001/api/product'));
     if (response.statusCode == 200) {
       return compute(parseProduct, response.body);
     } else {
@@ -137,16 +138,16 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
   //   return result;
   // }
 
-  List<Product> products = List();
+  //List<Values> cats = List();
 
   @override
   void initState() {
     super.initState();
-    NetworkRequest.fetchProduct().then((dataFromServer){
-      setState((){
-        products = dataFromServer;
-      });
-    });
+    // NetworkRequest.fetchProduct().then((dataFromServer){
+    //   setState((){
+    //     cats = dataFromServer;
+    //   });
+    // });
   }
 
   @override
@@ -171,49 +172,52 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
 
             Container(
                 height: 65.0,
-              child: FutureBuilder<Product>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: products.length,
-                      itemBuilder: (context, index){
-                        return Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${products[index].id}'),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
+              // child: FutureBuilder<List<Values>>(
+              //   future: NetworkRequest.fetchProduct(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       debugPrint('fetch product success');
+              //       final products = snapshot.data;
+              //       return ListView.builder(
+              //         itemCount: products.length,
+              //         itemBuilder: (context, index){
+              //           return Card(
+              //             child: Padding(
+              //               padding: EdgeInsets.all(10),
+              //               child: Column(
+              //                 mainAxisAlignment: MainAxisAlignment.start,
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   Text('${products[index].productName}'),
+              //                 ],
+              //               ),
+              //             ),
+              //           );
+              //         },
+              //       );
+              //     } else if (snapshot.hasError) {
+              //       return Text('${snapshot.error}');
+              //     }
+              //
+              //     // By default, show a loading spinner.
+              //     return const CircularProgressIndicator();
+              //   },
+              // ),
 
-                  // By default, show a loading spinner.
-                  return const CircularProgressIndicator();
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: categories == null?0:categories.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map cat = categories[index];
+                  return HomeCategory(
+                    icon: cat['icon'],
+                    title: cat['name'],
+                    items: cat['items'].toString(),
+                    isHome: true,
+                  );
                 },
-
-                // child: ListView.builder(
-                //   scrollDirection: Axis.horizontal,
-                //   shrinkWrap: true,
-                //   itemCount: categories == null?0:categories.length,
-                //   itemBuilder: (BuildContext context, int index) {
-                //     Map cat = categories[index];
-                //     return HomeCategory(
-                //       icon: cat['icon'],
-                //       title: cat['name'],
-                //       items: cat['items'].toString(),
-                //       isHome: true,
-                //     );
-                //   },
-                // ),
-              )
+              ),
 
             ),
 
